@@ -57,12 +57,31 @@ summary {cursor:pointer;font-weight:700;padding:10px 0;min-height:44px;color:#24
 .phone-notice p {margin:3px 0 0;font-size:15px;line-height:1.45;color:#fff}
 .notice-close {position:absolute;top:4px;right:4px;width:44px;height:44px;font-size:23px;background:transparent;color:white;border:0}
 .reminder-sr {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style><style>#guideBox {position:fixed;z-index:120;width:min(320px,calc(100vw - 16px));padding:16px 18px;background:#173b37;color:#fff;border:1px solid #9ac7b5;border-radius:16px;box-shadow:0 8px 36px #091d2980;line-height:1.45}
+#guideBox::before {content:"";position:absolute;top:-7px;left:var(--tip);width:12px;height:12px;transform:rotate(45deg);background:#173b37;border-left:1px solid #9ac7b5;border-top:1px solid #9ac7b5}
+#guideBox[data-above=true]::before {top:auto;bottom:-7px;transform:rotate(225deg)}
+#guideBox small{color:#ceeac9}#guideBox h2{margin:4px 0;font-size:20px;color:#fff}#guideBox p{font-size:15px;margin:6px 0 14px;color:#edf8f2}#guideBox button{min-height:42px;padding:8px 15px;border-radius:8px;background:white;color:#173b37;font-weight:700}#guideBox #guideSkip{background:transparent;color:white}
+.guide-focus {outline:4px solid #dc870c!important;outline-offset:3px}
+.top-actions {flex-wrap:wrap}.top-actions .pref-btn{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-height:42px;font-weight:650}
+@media(max-width:650px){.topbar{align-items:flex-start;gap:8px}.top-actions{justify-content:flex-end}.top-actions .pref-btn{padding:7px}.topbar .top-link{display:none}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#101922;--paper:#1c2936;--ink:#f1f6fb;--muted:#bac9d8;--line:#435569;--navy:#334d70;--blue:#9bbcff;--green:#a6dfbf;--orange:#f2ce91}
+[data-theme=dark] body,[data-theme=dark] #demoLogin{background:#101922;color:var(--ink)}
+[data-theme=dark] :is(.sidebar,.topbar,.panel,.modal,.mobile-nav,.day,.agenda-item,.rec,.selectcard,.loginbox,.linkcard,.stat,.chips button,.iconbtn,.btn.secondary,.check,.course,.present,.datebox,.prototype,.pillnum,.segmented,.badge,.notice,.recicon,.compare>div,.btn.light,.demoTour,.demoTour a,.demoTour button,.linkcard .symbol,.field input,.field textarea,.field select,.reminder-controls select,.stage-panel select,.datepick input,.date-tools input,.loginbox input){background:#1d2c3a;color:#ecf3fa;border-color:#4c6174}
+[data-theme=dark] :is(.btn,.day.active,.segmented button.active,.nav button.active,.chips button.active,.btn.lime,.check.done){background:#aac6ff;color:#12263c}
+[data-theme=dark] :is(.btn.secondary,.btn.light){background:#2d4156;color:#eaf3ff}
+[data-theme=dark] :is(.route-card,.notice.green,.badge.green,.agenda-item.rest .desc){background:#203c35;color:#e4f8e7}
+[data-theme=dark] :is(.notice.amber,.badge.amber){background:#483820;color:#ffdea2}
+[data-theme=dark] :is(.agenda-item .desc,.stops [aria-current=step],.selectcard.active,.agenda-item.work .desc,.agenda-item.personal .desc,.agenda-item.leisure .desc){background:#293c4d;color:#f0f6fc}
+[data-theme=dark] :is(.textbtn,.top-link,.more-links button,.more-links a,summary,.eyebrow,.loginbox a){color:#adcdff}
+[data-theme=dark] :is(.task-meta,.small,.footnote,.lead,.loginbox p,.datebox span,.agenda-item p,.rec p,.post p,.course p,.stage-panel p,.segmented button){color:#c2d0df}
+[data-theme=dark] .segmented button.active{color:#12263c}
+
 </style></head>
 <body><style>#demoLogin{min-height:100vh;display:grid;place-items:center;padding:28px;background:#eef2f7}.loginbox{width:min(100%,430px);background:white;padding:34px;border:1px solid #dce5ef;border-radius:25px;box-shadow:0 20px 65px #183b5d15}.loginbox h1{margin:25px 0 12px;font-size:31px}.loginbox label{font-size:12px;font-weight:700}.loginbox input{width:100%;padding:13px;border:1px solid #d7dfe9;border-radius:10px;margin:8px 0 18px;background:#f5f7fa;color:#5a6d80}.loginbox p{font-size:13px;color:#657689}.demoTour{background:#edf4de;padding:10px 18px;border-bottom:1px solid #cad8b2;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:12px Segoe UI,Arial,sans-serif}.demoTour button,.demoTour a{background:white;border:1px solid #c7d6b0;border-radius:7px;color:#365838;font-size:11px;padding:7px 10px;text-decoration:none}.demoTour button.current{background:#365838;color:white}</style>
 <section id="demoLogin"><div class="loginbox"><div class="logo"><span class="logo-mark">M</span>Meu Tempo</div><span class="badge" style="margin-top:20px">Acesso demonstrativo</span><h1>Sua semana começa aqui.</h1><p>Entre com a conta de exemplo para testar a agenda, o transporte e as caronas.</p><form onsubmit="enterDemo(event)"><label for="demoEmail">Conta de exemplo</label><input id="demoEmail" type="text" value="estudante@demonstracao.local" readonly autocomplete="off"><label for="demoPassword">Senha fictícia</label><input id="demoPassword" type="password" value="demonstracao" readonly autocomplete="off"><button class="btn" style="width:100%" type="submit">Entrar na demonstração →</button></form><p>Não use sua senha do SIGAA. Este login não autentica uma conta e não envia informações.</p><a href="../index.html" class="small">Voltar ao início do projeto</a></div></section>
 <div class="app" id="app" hidden>
  <aside class="sidebar"><div><div class="logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div></div><nav class="nav" id="desktopNav"></nav><div class="profile"><div class="avatar">E</div><div><b>Estudante</b><div class="small">Sua agenda pessoal</div></div></div></aside>
- <div class="workspace"><header class="topbar"><div class="top-label"><b>Meu Tempo</b><div class="small">Planejamento universitário</div></div><div class="mobile-logo logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div><div class="top-actions"><a class="prototype" href="../index.html" style="text-decoration:none">Início do projeto</a><button class="present" onclick="togglePhone()" id="phoneBtn">Modo celular</button><button class="top-link" onclick="about()" aria-label="Sobre os dados usados">Sobre os dados</button></div></header>
+ <div class="workspace"><header class="topbar"><div class="top-label"><b>Meu Tempo</b><div class="small">Planejamento universitário</div></div><div class="mobile-logo logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div><div class="top-actions"><button class="pref-btn" id="themeSwitch" aria-pressed="false">Tema escuro</button><button class="pref-btn" id="guideStart">Guia de uso</button><a class="prototype" href="../index.html" style="text-decoration:none">Início do projeto</a><button class="present" onclick="togglePhone()" id="phoneBtn">Modo celular</button><button class="top-link" onclick="about()" aria-label="Sobre os dados usados">Sobre os dados</button></div></header>
  <main class="content">
   <section class="page active" id="inicio">
   <div class="heading"><div><p class="eyebrow" id="modeNote"></p><h1>Meu dia</h1><p class="lead" id="homeStatus"></p></div><button class="btn secondary" onclick="eventForm()">Adicionar atividade</button></div>
@@ -330,5 +349,79 @@ if(manualMode){$('switchAgenda').href='?';$('switchAgenda').textContent='Abrir s
 function enterDemo(e){e.preventDefault();document.getElementById('demoLogin').hidden=true;document.getElementById('app').hidden=false;try{sessionStorage.setItem('meutempo-demo-login','1')}catch{}go('inicio')}
 if(guidedTour){const tour=document.createElement('div');tour.className='demoTour';tour.innerHTML='<b>Teste com seus dados</b><button onclick="eventForm()">Adicionar atividade</button><button onclick="go(\'agenda\')">Agenda</button><button onclick="go(\'ajustar\')">Reorganizar</button><a href="../apresentacao/index.html#8">Voltar aos slides →</a>';document.querySelector('.topbar').after(tour)}
 try{if(sessionStorage.getItem('meutempo-demo-login')==='1'){document.getElementById('demoLogin').hidden=true;document.getElementById('app').hidden=false}}catch{}
-</script><script src="../pitch-clock.js"></script></body>
+</script><script src="../pitch-clock.js"></script><aside id="guideBox" hidden role="dialog" aria-labelledby="guideTitle" aria-describedby="guideText"><small id="guideCount"></small><h2 id="guideTitle"></h2><p id="guideText"></p><button id="guideNext">Próximo</button> <button id="guideSkip">Pular guia</button></aside><script>(() => {
+  const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
+  const put = (key,value) => { try { localStorage.setItem(key,value); } catch {} };
+  const themeKey = 'meutempo-tema';
+  const guideKey = 'meutempo-guia-v1';
+  const theme = $('themeSwitch');
+  function paintTheme(dark) {
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    theme.setAttribute('aria-pressed', String(dark));
+  }
+  paintTheme(get(themeKey) ? get(themeKey) === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
+  theme.onclick = () => {
+    const dark = document.documentElement.dataset.theme !== 'dark';
+    paintTheme(dark);
+    put(themeKey, dark ? 'dark' : 'light');
+  };
+  const steps = [
+    ['#inicio .heading button','Cadastre um estudo','Toque em Adicionar atividade para escolher o dia e reservar um horário.'],
+    ['#simulateReminder','Teste um lembrete','Escolha dia ou mês e simule o aviso que apareceria no celular.'],
+    ['#inicio .route-card button','Confira a chegada','Veja a hora de chegada ao campus antes de reservar um estudo.'],
+    ['#inicio button[onclick*="mural"]','Encontre uma carona','Abra o mural para ler avisos e marcar interesse em uma carona.'],
+    ['#inicio summary','Reorganize sua semana','Em Mais ferramentas, você pode mudar um estudo de horário ou reservar uma pausa.'],
+    ['#themeSwitch','Ajuste a aparência','Ative ou desative o tema escuro. Sua escolha fica salva neste navegador.']
+  ];
+  const box = $('guideBox');
+  let step = -1, target;
+  function position() {
+    if (step < 0) return;
+    const r = target.getBoundingClientRect(), gap = 14;
+    const above = r.bottom + gap + box.offsetHeight > innerHeight && r.top > box.offsetHeight + gap;
+    const left = Math.max(8, Math.min(r.left, innerWidth - box.offsetWidth - 8));
+    box.style.left = left + 'px';
+    box.style.top = Math.max(8,Math.min(innerHeight - box.offsetHeight - 8, above ? r.top - gap - box.offsetHeight : r.bottom + gap)) + 'px';
+    box.dataset.above = String(above);
+    box.style.setProperty('--tip', Math.max(18,Math.min(box.offsetWidth-22,r.left+r.width/2-left))+'px');
+  }
+  function display(i) {
+    step = i;
+    target?.classList.remove('guide-focus');
+    const [selector,title,description] = steps[i];
+    target = document.querySelector(selector);
+    target.scrollIntoView({block:'center',behavior:'instant'});
+    target.classList.add('guide-focus');
+    $('guideCount').textContent = 'Guia · ' + (i+1) + ' de ' + steps.length;
+    $('guideTitle').textContent = title;
+    $('guideText').textContent = description;
+    $('guideNext').textContent = i === steps.length-1 ? 'Concluir' : 'Próximo';
+    box.hidden = false;
+    position();
+    $('guideNext').focus({preventScroll:true});
+  }
+  function end() {
+    if(step<0) return;
+    step=-1; target?.classList.remove('guide-focus'); box.hidden=true;
+    put(guideKey,'visto');
+    $('guideStart').focus();
+  }
+  function start() { go('inicio'); display(0); }
+  $('guideStart').onclick=start;
+  $('guideSkip').onclick=end;
+  $('guideNext').onclick=()=> step===steps.length-1 ? end() : display(step+1);
+  window.addEventListener('scroll',position,{passive:true});
+  window.addEventListener('resize',position);
+  document.addEventListener('keydown',e=>{
+    if(step<0)return;
+    if(e.key==='Escape'){end();return;}
+    if(e.key==='Tab'){e.preventDefault();(document.activeElement===$('guideNext') ? $('guideSkip') : $('guideNext')).focus();}
+  });
+  document.addEventListener('pointerdown',e=>{if(step>=0&&!box.contains(e.target))end();},true);
+  function welcome() { if(!get(guideKey) && !$('app').hidden) start(); }
+  document.querySelector('#demoLogin form').addEventListener('submit',()=>requestAnimationFrame(welcome));
+  if(!$('app').hidden) requestAnimationFrame(welcome);
+})();
+
+</script></body>
 </html>
