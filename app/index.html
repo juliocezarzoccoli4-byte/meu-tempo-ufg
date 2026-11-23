@@ -43,6 +43,20 @@ summary {cursor:pointer;font-weight:700;padding:10px 0;min-height:44px;color:#24
 @media(max-width:850px){.daily-layout{grid-template-columns:minmax(0,1fr)}.top-actions{flex-wrap:wrap}.page{padding-bottom:20px}.daily-layout .panel,.stage-panel{min-width:0}.task-body{min-width:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
+.reminder-controls {display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.reminder-controls label {font-weight:600}
+.reminder-controls select {min-height:44px;padding:8px;border:1px solid #8091a4;border-radius:9px;background:white;color:#172c42;font:inherit}
+.phone-notice {position:fixed;z-index:65;left:50%;top:max(12px,env(safe-area-inset-top));transform:translateX(-50%);box-sizing:border-box;width:min(390px,calc(100% - 24px));padding:14px 48px 15px 16px;border:1px solid #445466;border-radius:20px;background:#1c2936;color:#fff;box-shadow:0 8px 25px #14263f44;overflow-wrap:anywhere}
+.phone-notice:not([hidden]) {animation:reminder-slide .25s ease-out}
+@keyframes reminder-slide {from{opacity:0;transform:translate(-50%,-20px)}}
+@media(prefers-reduced-motion:reduce){.phone-notice:not([hidden]){animation:none}}
+.notice-brand {display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-bottom:8px}
+.notice-brand small {font-weight:400;color:#c8d7e5}
+.app-monogram {background:#c1e9d6;color:#163d36;border-radius:5px;padding:2px 5px}
+.phone-notice strong {font-size:17px}
+.phone-notice p {margin:3px 0 0;font-size:15px;line-height:1.45;color:#fff}
+.notice-close {position:absolute;top:4px;right:4px;width:44px;height:44px;font-size:23px;background:transparent;color:white;border:0}
+.reminder-sr {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style></head>
 <body><style>#demoLogin{min-height:100vh;display:grid;place-items:center;padding:28px;background:#eef2f7}.loginbox{width:min(100%,430px);background:white;padding:34px;border:1px solid #dce5ef;border-radius:25px;box-shadow:0 20px 65px #183b5d15}.loginbox h1{margin:25px 0 12px;font-size:31px}.loginbox label{font-size:12px;font-weight:700}.loginbox input{width:100%;padding:13px;border:1px solid #d7dfe9;border-radius:10px;margin:8px 0 18px;background:#f5f7fa;color:#5a6d80}.loginbox p{font-size:13px;color:#657689}.demoTour{background:#edf4de;padding:10px 18px;border-bottom:1px solid #cad8b2;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:12px Segoe UI,Arial,sans-serif}.demoTour button,.demoTour a{background:white;border:1px solid #c7d6b0;border-radius:7px;color:#365838;font-size:11px;padding:7px 10px;text-decoration:none}.demoTour button.current{background:#365838;color:white}</style>
 <section id="demoLogin"><div class="loginbox"><div class="logo"><span class="logo-mark">M</span>Meu Tempo</div><span class="badge" style="margin-top:20px">Acesso demonstrativo</span><h1>Sua semana começa aqui.</h1><p>Entre com a conta de exemplo para testar a agenda, o transporte e as caronas.</p><form onsubmit="enterDemo(event)"><label for="demoEmail">Conta de exemplo</label><input id="demoEmail" type="text" value="estudante@demonstracao.local" readonly autocomplete="off"><label for="demoPassword">Senha fictícia</label><input id="demoPassword" type="password" value="demonstracao" readonly autocomplete="off"><button class="btn" style="width:100%" type="submit">Entrar na demonstração →</button></form><p>Não use sua senha do SIGAA. Este login não autentica uma conta e não envia informações.</p><a href="../index.html" class="small">Voltar ao início do projeto</a></div></section>
@@ -54,7 +68,17 @@ summary {cursor:pointer;font-weight:700;padding:10px 0;min-height:44px;color:#24
   <div class="heading"><div><p class="eyebrow" id="modeNote"></p><h1>Meu dia</h1><p class="lead" id="homeStatus"></p></div><button class="btn secondary" onclick="eventForm()">Adicionar atividade</button></div>
   <div class="daily-layout"><div class="panel">
     <div class="minihead"><h2>Horários do dia</h2><label class="datepick">Data <input type="date" id="homeDate" onchange="chooseHomeDate(this.value)"></label></div>
-    <button class="btn" onclick="notifySchedule()">Simular notificação</button>
+    <div class="reminder-controls">
+      <label for="reminderScope">Lembretes</label>
+      <select id="reminderScope" onchange="resetReminder()"><option value="day">Do dia</option><option value="month">Do mês</option></select>
+      <button class="btn" id="simulateReminder" onclick="notifySchedule()">Simular notificação</button>
+    </div>
+    <div id="phoneNotice" class="phone-notice" hidden>
+      <div class="notice-brand"><span class="app-monogram" aria-hidden="true">M</span> Meu Tempo <small>agora</small></div>
+      <strong id="reminderTitle"></strong><p id="reminderDetail"></p>
+      <button class="notice-close" onclick="dismissReminder(true)" aria-label="Dispensar notificação">×</button>
+    </div>
+    <span class="reminder-sr" role="status" aria-live="polite" aria-atomic="true" id="reminderAnnounce"></span>
     <div id="upcoming"></div>
   </div><div class="stack"><div class="panel route-card"><h2>Ida ao campus</h2><p>Goiânia · 3 linhas · 1h10 de viagem simulada</p><div class="route-strip">263 → 268 → 004</div><button class="btn light" onclick="go('onibus')">Simular trajeto</button></div>
   <div class="panel"><h2>Mural dos estudantes</h2><p>Veja caronas e avisos perto do campus.</p><button class="btn secondary" onclick="go('mural')">Abrir mural</button></div>
@@ -157,15 +181,42 @@ function renderHome() {
 }
 function chooseHomeDate(value) {
   if (!validDate(value)) return;
+  resetReminder();
   jumpDate(value);
   renderHome();
 }
+let lastReminder = null;
+let hideReminderTimer;
+function dismissReminder(restoreFocus = false) {
+  clearTimeout(hideReminderTimer);
+  $('phoneNotice').hidden = true;
+  $('reminderAnnounce').textContent = '';
+  if (restoreFocus) $('simulateReminder').focus();
+}
+function resetReminder() {
+  dismissReminder();
+  lastReminder = null;
+}
 function notifySchedule() {
-  const entries = ordered(state.events.filter(e => e.date === day && !e.done && e.time));
-  const items = entries.map(e => '<li><strong>' + e.time + '</strong> · ' + esc(e.title) + '</li>').join('');
-  openModal('Notificação simulada', '<p>' + fullDate(day) + '</p>' +
-    (items ? '<ul class="schedule-list">' + items + '</ul>' : '<p>Nenhum horário pendente para este dia.</p>') +
-    '<button class="btn" onclick="closeModal()">Entendido</button>');
+  const monthly = $('reminderScope').value === 'month';
+  const period = monthly ? day.slice(0, 7) : day;
+  const entries = ordered(state.events.filter(e => !e.done && e.date.startsWith(period)));
+  if (monthly) entries.sort((a,b) => Number(b.type === 'deadline') - Number(a.type === 'deadline'));
+  const previous = lastReminder?.period === period ? entries.findIndex(e => e.id === lastReminder.id) : -1;
+  const item = entries.length ? entries[(previous + 1) % entries.length] : null;
+  lastReminder = item ? {period, id:item.id} : null;
+  const labels = {study:'Hora de estudar', deadline:'Prazo de entrega', lesson:'Lembrete de aula', rest:'Hora da pausa'};
+  const title = item ? (labels[item.type] || 'Lembrete da agenda') : 'Agenda livre';
+  const detail = item ? item.title + ' · ' + shortDate(item.date) + (item.time ? ' às ' + item.time : ' · sem horário definido')
+    : 'Nenhuma atividade pendente ' + (monthly ? 'neste mês.' : 'neste dia.');
+  $('reminderTitle').textContent = title;
+  $('reminderDetail').textContent = detail;
+  $('phoneNotice').hidden = false;
+  $('reminderAnnounce').textContent = title + '. ' + detail;
+  clearTimeout(hideReminderTimer);
+  hideReminderTimer = setTimeout(() => {
+    if (!$('phoneNotice').contains(document.activeElement)) dismissReminder();
+  }, 12000);
 }
 
 const busStops = [
