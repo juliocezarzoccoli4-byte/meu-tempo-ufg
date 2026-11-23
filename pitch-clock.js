@@ -2,6 +2,7 @@
  'use strict';
  const KEY='meutempo-shared-pitch-clock-v2';
  const params=new URLSearchParams(location.search);
+ if(document.getElementById('demoLogin') && !params.has('mtclock') && params.get('tour') !== '1') return;
  const fresh=()=>({running:false,remainingMs:480000,endsAt:null,updatedAt:0});
  let state=fresh();
  function valid(x){return x&&typeof x.running==='boolean'&&Number.isFinite(x.remainingMs)&&Number.isFinite(x.updatedAt)&&(!x.running||Number.isFinite(x.endsAt))}
