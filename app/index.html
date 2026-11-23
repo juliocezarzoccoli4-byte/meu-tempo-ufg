@@ -13,15 +13,73 @@
 
 .date-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0}.date-tools label{font-size:12px}.date-tools input{max-width:100%;padding:9px;border:1px solid #ccd6e4;border-radius:8px}.completed{text-decoration:line-through;opacity:.65}.task-body .textbtn{text-align:left}.field textarea{font:inherit}.weekbar b{text-align:center}.calendar{gap:5px}@media(max-width:850px){.heading{align-items:flex-start;flex-wrap:wrap}.content{overflow-wrap:anywhere}.segmented{max-width:100%}.segmented button{padding:7px 9px}.stats{gap:6px}.stat{padding:12px 9px}.stat span{font-size:10px}.compare{grid-template-columns:1fr}}
 </style>
-</head>
+<style>.daily-layout {display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,1fr);gap:20px;align-items:start}
+.daily-layout .minihead {align-items:center;flex-wrap:wrap;gap:8px}
+.daily-layout p,.stage-panel p {line-height:1.55;margin:10px 0 16px}
+.daily-layout #upcoming {margin-top:18px}
+.route-card {background:#edf6f2;color:#173f38}
+.route-strip {font-size:1.4rem;font-weight:700;margin:4px 0 18px}
+.stage-panel {max-width:740px}
+.stage-panel label,.datepick {font-size:.94rem;font-weight:600}
+.stage-panel select,.datepick input {font:inherit;color:#172b4b;padding:9px;border:1px solid #8494a8;border-radius:8px;background:#fff;max-width:100%;min-height:44px}
+.stage-panel>select {margin:8px}
+.stops,.schedule-list {list-style:none;margin:16px 0;padding:0}
+.stops li,.schedule-list li,.post {padding:15px 0;border-bottom:1px solid #d4deea}
+.stops li {display:flex;align-items:center;gap:14px;line-height:1.6}
+.stops [aria-current="step"] {border-left:4px solid #214fb4;padding-left:10px;background:#f0f5ff}
+.line-number {padding:4px 10px;background:#193e63;color:#fff;border-radius:6px}
+.trip-state {font-weight:600}
+summary {cursor:pointer;font-weight:700;padding:10px 0;min-height:44px;color:#244890}
+.more-links {display:grid}
+.more-links button,.more-links a {text-align:left;background:none;color:#204695;font:inherit;padding:12px 0}
+:focus-visible {outline:3px solid #965000!important;outline-offset:3px}
+.btn,.iconbtn,.textbtn,.nav button,.mobile-nav button {min-height:44px}
+.mobile-nav button {font-size:12px;min-width:52px}
+.task-meta,.small,.footnote,.lead {color:#4d6076}
+#agenda .grid {display:block;max-width:820px}
+#inicio .task-body {min-width:0}
+.post p,.task-body {overflow-wrap:anywhere}
+.compact .daily-layout {grid-template-columns:minmax(0,1fr)}
+@media(max-width:850px){.daily-layout{grid-template-columns:minmax(0,1fr)}.top-actions{flex-wrap:wrap}.page{padding-bottom:20px}.daily-layout .panel,.stage-panel{min-width:0}.task-body{min-width:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+</style></head>
 <body><style>#demoLogin{min-height:100vh;display:grid;place-items:center;padding:28px;background:#eef2f7}.loginbox{width:min(100%,430px);background:white;padding:34px;border:1px solid #dce5ef;border-radius:25px;box-shadow:0 20px 65px #183b5d15}.loginbox h1{margin:25px 0 12px;font-size:31px}.loginbox label{font-size:12px;font-weight:700}.loginbox input{width:100%;padding:13px;border:1px solid #d7dfe9;border-radius:10px;margin:8px 0 18px;background:#f5f7fa;color:#5a6d80}.loginbox p{font-size:13px;color:#657689}.demoTour{background:#edf4de;padding:10px 18px;border-bottom:1px solid #cad8b2;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:12px Segoe UI,Arial,sans-serif}.demoTour button,.demoTour a{background:white;border:1px solid #c7d6b0;border-radius:7px;color:#365838;font-size:11px;padding:7px 10px;text-decoration:none}.demoTour button.current{background:#365838;color:white}</style>
-<section id="demoLogin"><div class="loginbox"><div class="logo"><span class="logo-mark">M</span>Meu Tempo</div><span class="badge" style="margin-top:20px">Acesso demonstrativo</span><h1>Sua semana começa aqui.</h1><p>Uma conta fictícia já está pronta para explorar o aplicativo.</p><form onsubmit="enterDemo(event)"><label for="demoEmail">Conta de exemplo</label><input id="demoEmail" type="text" value="estudante@demonstracao.local" readonly autocomplete="off"><label for="demoPassword">Senha fictícia</label><input id="demoPassword" type="password" value="demonstracao" readonly autocomplete="off"><button class="btn" style="width:100%" type="submit">Entrar na demonstração →</button></form><p>Não use sua senha do SIGAA. Este login não autentica uma conta e não envia informações.</p><a href="../index.html" class="small">Voltar ao início do projeto</a></div></section>
+<section id="demoLogin"><div class="loginbox"><div class="logo"><span class="logo-mark">M</span>Meu Tempo</div><span class="badge" style="margin-top:20px">Acesso demonstrativo</span><h1>Sua semana começa aqui.</h1><p>Entre com a conta de exemplo para testar a agenda, o transporte e as caronas.</p><form onsubmit="enterDemo(event)"><label for="demoEmail">Conta de exemplo</label><input id="demoEmail" type="text" value="estudante@demonstracao.local" readonly autocomplete="off"><label for="demoPassword">Senha fictícia</label><input id="demoPassword" type="password" value="demonstracao" readonly autocomplete="off"><button class="btn" style="width:100%" type="submit">Entrar na demonstração →</button></form><p>Não use sua senha do SIGAA. Este login não autentica uma conta e não envia informações.</p><a href="../index.html" class="small">Voltar ao início do projeto</a></div></section>
 <div class="app" id="app" hidden>
- <aside class="sidebar"><div><div class="logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div><div class="tagline">Sua vida cabe na agenda.</div></div><nav class="nav" id="desktopNav"></nav><div class="side-note"><b>O descanso também conta.</b>Organize compromissos com espaço para você.</div><div class="profile"><div class="avatar">E</div><div><b>Estudante</b><div class="small">Sua agenda pessoal</div></div></div></aside>
- <div class="workspace"><header class="topbar"><div class="top-label"><b>Seu semestre, com mais clareza.</b><div class="small">Agenda pessoal · preenchimento manual</div></div><div class="mobile-logo logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div><div class="top-actions"><a class="prototype" href="../index.html" style="text-decoration:none">Início do projeto</a><button class="present" onclick="togglePhone()" id="phoneBtn">Modo celular</button><button class="top-link" onclick="about()" aria-label="Sobre os dados usados">Sobre os dados</button></div></header>
+ <aside class="sidebar"><div><div class="logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div></div><nav class="nav" id="desktopNav"></nav><div class="profile"><div class="avatar">E</div><div><b>Estudante</b><div class="small">Sua agenda pessoal</div></div></div></aside>
+ <div class="workspace"><header class="topbar"><div class="top-label"><b>Meu Tempo</b><div class="small">Planejamento universitário</div></div><div class="mobile-logo logo"><span class="logo-mark" data-icon="spark"></span>Meu Tempo</div><div class="top-actions"><a class="prototype" href="../index.html" style="text-decoration:none">Início do projeto</a><button class="present" onclick="togglePhone()" id="phoneBtn">Modo celular</button><button class="top-link" onclick="about()" aria-label="Sobre os dados usados">Sobre os dados</button></div></header>
  <main class="content">
-  <section class="page active" id="inicio"><div class="heading"><div><div class="eyebrow">Sua rotina começa aqui</div><h1>Vamos organizar a semana?</h1><p class="lead" id="homeStatus"></p></div><button class="btn" onclick="eventForm()">Adicionar</button></div><div class="grid"><div><div class="hero"><div class="eyebrow">Do seu jeito</div><h2>Espaço para o que<br>faz parte da sua vida.</h2><p>Cadastre trabalho, estudo, descanso e lazer. Escolha os dias e horários que fazem sentido para você.</p><button class="btn lime" onclick="eventForm()">Adicionar atividade</button></div><div class="stats" id="stats"></div><div class="panel"><div class="minihead"><h2>Próximas atividades</h2><button class="textbtn" onclick="go(&quot;agenda&quot;)">Ver agenda →</button></div><div id="upcoming"></div></div></div><div class="stack"><div class="panel"><h2>Trabalhos da faculdade</h2><p class="lead" style="margin:12px 0">Adicione uma entrega, prova ou apresentação com disciplina e data.</p><button class="btn light" onclick="eventForm(null,{type:'deadline'})">Adicionar prazo acadêmico</button></div><div class="panel"><h2>Espaço para respirar</h2><p class="lead" style="margin:12px 0">Escolha uma pausa e reserve um horário na sua agenda.</p><button class="btn secondary" onclick="go('cuidado')">Encontrar uma pausa</button></div><div class="notice">Suas alterações ficam salvas neste navegador. Você pode voltar depois e continuar de onde parou.</div></div></div></section>
-  <section class="page " id="agenda"><div class="heading"><div><div class="eyebrow">Planejamento integrado</div><h1>Sua agenda, por inteiro.</h1><p class="lead">Adicione, altere e organize seus próprios horários.</p></div><button class="btn" onclick="eventForm()">Adicionar</button></div><div class="grid"><div><div class="row wrap"><div class="segmented"><button id="mode-semana" onclick="setAgendaMode('semana')">Semana</button><button id="mode-prazos" onclick="setAgendaMode('prazos')">Prazos acadêmicos</button></div><button class="textbtn" onclick="go(&quot;ajustar&quot;)">Aconteceu um imprevisto?</button></div><div id="weekArea"><div class="date-tools"><label for="jumpDate">Ir para uma data</label><input id="jumpDate" type="date" onchange="jumpDate(this.value)"><button class="btn secondary smallbtn" onclick="jumpDate(today())">Hoje</button><button class="btn secondary smallbtn" onclick="duplicateWeek()">Copiar esta semana</button></div><div class="weekbar"><button class="iconbtn" aria-label="Semana anterior" onclick="changeWeek(-7)">←</button><b id="weekTitle" style="font-size:12px"></b><button class="iconbtn" aria-label="Próxima semana" onclick="changeWeek(7)">→</button></div><div class="calendar" id="days"></div><div class="minihead"><h2 id="dayTitle"></h2><span class="small">Horários locais</span></div><div id="dayEvents"></div></div><div id="deadlineArea" hidden></div></div><div class="stack"><div class="panel"><h2>Um dia ou várias semanas</h2><p class="lead" style="margin:12px 0">Escolha uma data para abrir a semana correspondente. Ao adicionar uma atividade, você pode repetir diariamente, semanalmente ou de segunda a sexta.</p><button class="btn light" onclick="eventForm()">Cadastrar atividade</button></div><div class="panel"><h2>Seu descanso fica protegido</h2><p class="lead" style="margin:12px 0">Reserve blocos na categoria Descanso. A reorganização respeita esses horários e mantém os prazos acadêmicos.</p><button class="btn secondary" onclick="eventForm(null,{type:'rest'})">Reservar descanso</button></div></div></div></section>
+  <section class="page active" id="inicio">
+  <div class="heading"><div><p class="eyebrow" id="modeNote"></p><h1>Meu dia</h1><p class="lead" id="homeStatus"></p></div><button class="btn secondary" onclick="eventForm()">Adicionar atividade</button></div>
+  <div class="daily-layout"><div class="panel">
+    <div class="minihead"><h2>Horários do dia</h2><label class="datepick">Data <input type="date" id="homeDate" onchange="chooseHomeDate(this.value)"></label></div>
+    <button class="btn" onclick="notifySchedule()">Simular notificação</button>
+    <div id="upcoming"></div>
+  </div><div class="stack"><div class="panel route-card"><h2>Ida ao campus</h2><p>Goiânia · 3 linhas · 1h10 de viagem simulada</p><div class="route-strip">263 → 268 → 004</div><button class="btn light" onclick="go('onibus')">Simular trajeto</button></div>
+  <div class="panel"><h2>Mural dos estudantes</h2><p>Veja caronas e avisos perto do campus.</p><button class="btn secondary" onclick="go('mural')">Abrir mural</button></div>
+  <details class="panel"><summary>Mais ferramentas</summary><div class="more-links">
+    <button onclick="go('fontes')">Trabalhos e prazos</button><button onclick="go('ajustar')">Reorganizar estudos</button><button onclick="go('cuidado')">Reservar uma pausa</button><button onclick="go('apoio')">Apoio UFG</button><a id="switchAgenda" href="?agenda=pessoal">Abrir minha agenda manual</a>
+  </div></details></div></div>
+</section>
+<section class="page" id="onibus">
+  <div class="heading"><div><p class="eyebrow">Goiânia · transporte simulado</p><h1>Ônibus para a UFG</h1><p class="lead">Escolha a saída e acompanhe os dois pontos de troca. Trajeto e horários fictícios.</p></div></div>
+  <div class="panel stage-panel"><label for="tripHour">Saída do Setor Central</label>
+  <select id="tripHour" onchange="tripStep=-1;renderTrip()"><option value="1030">17h10</option><option value="1060">17h40</option><option value="1090">18h10</option></select>
+  <ol class="stops" id="tripList"></ol>
+  <p class="trip-state" role="status" id="tripStatus"></p><button class="btn" id="tripNext" onclick="advanceTrip()">Iniciar trajeto</button></div>
+</section>
+<section class="page" id="mural">
+  <div class="heading"><div><p class="eyebrow">Comunidade · Goiânia</p><h1>Mural dos estudantes</h1><p class="lead">Caronas e avisos fictícios. Suas interações ficam neste navegador.</p></div></div>
+  <div class="panel stage-panel"><details id="compose"><summary>Adicionar anúncio de teste</summary>
+  <form onsubmit="publishPost(event)"><div class="two"><div class="field"><label for="postKind">Tipo</label><select id="postKind"><option>Carona</option><option>Aviso</option></select></div>
+  <div class="field"><label for="postArea">Local de referência</label><select id="postArea"><option>Setor Universitário</option><option>Setor Central</option><option>Campus Samambaia</option></select></div></div>
+  <div class="field"><label for="postText">Mensagem fictícia, sem dados pessoais</label><textarea required maxlength="280" id="postText" rows="3"></textarea></div><button class="btn">Adicionar ao mural</button></form>
+  </details><div id="posts"></div></div>
+</section>
+
+
+  <section class="page " id="agenda"><div class="heading"><div><h1>Agenda semanal</h1><p class="lead">Adicione, altere e organize seus próprios horários.</p></div><button class="btn" onclick="eventForm()">Adicionar</button></div><div class="grid"><div><div class="row wrap"><div class="segmented"><button id="mode-semana" onclick="setAgendaMode('semana')">Semana</button><button id="mode-prazos" onclick="setAgendaMode('prazos')">Prazos acadêmicos</button></div><button class="textbtn" onclick="go(&quot;ajustar&quot;)">Aconteceu um imprevisto?</button></div><div id="weekArea"><div class="date-tools"><label for="jumpDate">Ir para uma data</label><input id="jumpDate" type="date" onchange="jumpDate(this.value)"><button class="btn secondary smallbtn" onclick="jumpDate(today())">Hoje</button><button class="btn secondary smallbtn" onclick="duplicateWeek()">Copiar esta semana</button></div><div class="weekbar"><button class="iconbtn" aria-label="Semana anterior" onclick="changeWeek(-7)">←</button><b id="weekTitle" style="font-size:12px"></b><button class="iconbtn" aria-label="Próxima semana" onclick="changeWeek(7)">→</button></div><div class="calendar" id="days"></div><div class="minihead"><h2 id="dayTitle"></h2><span class="small">Horários locais</span></div><div id="dayEvents"></div></div><div id="deadlineArea" hidden></div></div></div></section>
   <section class="page " id="fontes"><div class="heading"><div><div class="eyebrow">Cadastro manual</div><h1>Seus trabalhos e prazos.</h1><p class="lead">Adicione entregas, provas e apresentações. Você pode editar ou concluir cada atividade.</p></div><button class="btn" onclick="eventForm(null,{type:'deadline'})">Adicionar prazo</button></div><div class="grid"><div class="panel"><div class="minihead"><h2>Atividades acadêmicas</h2><span class="pillnum" id="deadlineCount"></span></div><div id="imports"></div></div><div class="stack"><div class="panel"><h2>Disciplinas cadastradas</h2><div id="courses"></div></div><div class="notice">A integração ao SIGAA e a leitura automática de roteiros são funções planejadas. Neste teste, você informa os dados manualmente.</div></div></div></section>
   <section class="page " id="ajustar"><div class="heading"><div><div class="eyebrow">Flexibilidade sem culpa</div><h1>A semana mudou. O plano pode mudar.</h1><p class="lead">Escolha um estudo, informe o imprevisto e revise a sugestão.</p></div></div><div class="grid"><div class="panel"><div id="replanIntro"></div><div id="replanProposal" hidden></div><div id="undoArea" style="margin-top:18px"></div></div><div class="stack"><div class="panel"><h2>Você permanece no controle</h2><p class="lead" style="margin-top:14px">Nenhuma mudança é aplicada sem sua confirmação. Descanso, prazos acadêmicos e outros compromissos são preservados.</p></div><div class="notice">A sugestão usa apenas os horários cadastrados e a faixa de disponibilidade que você informar. Se não houver espaço, a agenda permanece como está.</div></div></div></section>
   <section class="page" id="cuidado"><div class="heading"><div><div class="eyebrow">Um espaço para você</div><h1>Uma pausa possível, hoje.</h1><p class="lead">Sugestões opcionais. Você pode reservar um horário ou apenas usar a ideia.</p></div></div><div class="row wrap"><div class="chips" id="durationChips"><button class="active" onclick="setPause(5,this)">5 minutos</button><button onclick="setPause(15,this)">15 minutos</button><button onclick="setPause(30,this)">30 minutos</button></div><span class="small">Sem metas, sequências ou cobrança</span></div><div class="recommendations" id="recommendations"></div><div class="panel" style="margin-top:22px"><div class="row wrap"><div><h2>Precisa de um apoio diferente?</h2><p class="lead" style="margin-top:6px">Conheça serviços da UFG e suas condições de acesso.</p></div><button class="btn secondary" onclick="go('apoio')">Encontrar apoio <span data-icon="arrow"></span></button></div></div></section>
@@ -33,30 +91,156 @@
 const icons={spark:'<path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/><circle cx="12" cy="12" r="3"/>',home:'<path d="m3 10 9-7 9 7v10H3zM9 20v-7h6v7"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 2v6M17 2v6M3 11h18M7 15h2M13 15h4"/>',sync:'<path d="M20 7a9 9 0 0 0-15-2L2 8m0-5v5h5M4 17a9 9 0 0 0 15 2l3-3m0 5v-5h-5"/>',file:'<path d="M14 2H5v20h14V7zM14 2v6h5M8 12h8M8 16h6"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',plus:'<path d="M12 4v16M4 12h16"/>',heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',leaf:'<path d="M20 3C5 2 1 11 7 17s15 2 13-14ZM5 21 16 10"/>',moon:'<path d="M21 13A9 9 0 0 1 11 3 9 9 0 1 0 21 13Z"/>',check:'<path d="m5 12 4 4L19 6"/>',briefcase:'<rect x="2" y="7" width="20" height="14" rx="3"/><path d="M8 7V3h8v4M2 12a23 23 0 0 0 20 0M10 13h4"/>',lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4M12 14v3"/>',external:'<path d="M14 3h7v7M21 3 10 14M10 3H3v18h18v-7"/>',edit:'<path d="m15 4 5 5M4 20l5-1L21 7l-5-5L4 14z"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',music:'<path d="M9 18V5l12-3v13M9 8l12-3"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="15" rx="3" ry="3"/>'};
 const ico=n=>`<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${icons[n]||icons.spark}</svg>`;
 
-const navs=[['inicio','home','Início'],['agenda','calendar','Agenda'],['fontes','file','Trabalhos e prazos'],['ajustar','sync','Reorganizar'],['cuidado','leaf','Meu tempo'],['apoio','heart','Apoio UFG']];
-const KEY='meutempo-manual-v1',guidedTour=new URLSearchParams(location.search).get('tour')==='1';
+const navs=[['inicio','home','Meu dia'],['agenda','calendar','Agenda'],['onibus','sync','Ônibus'],['mural','file','Mural']];
+
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const localDate=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const today=()=>localDate(new Date()),parseDate=d=>new Date(d+'T12:00:00'),addDays=(d,n)=>{const a=parseDate(d);a.setDate(a.getDate()+n);return localDate(a)},monday=d=>addDays(d,-((parseDate(d).getDay()+6)%7));
 const shortDate=d=>d.slice(8,10)+'/'+d.slice(5,7),weekday=d=>parseDate(d).toLocaleDateString('pt-BR',{weekday:'long'}),fullDate=d=>parseDate(d).toLocaleDateString('pt-BR',{dateStyle:'long'});
-const categories={work:'Trabalho / emprego',study:'Estudo',deadline:'Trabalho acadêmico / prazo',rest:'Descanso',leisure:'Lazer',personal:'Pessoal'};
+const categories={lesson:'Aula',work:'Trabalho / emprego',study:'Estudo',deadline:'Trabalho acadêmico / prazo',rest:'Descanso',leisure:'Lazer',personal:'Pessoal'};
 const validDate=d=>/^\d{4}-\d{2}-\d{2}$/.test(d)&&!isNaN(parseDate(d))&&localDate(parseDate(d))===d;
 const validTime=t=>/^([01]\d|2[0-3]):[0-5]\d$/.test(t),minutes=t=>{const [h,m]=t.split(':').map(Number);return h*60+m},clock=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
 let serial=0;const uid=()=> 'e'+Date.now().toString(36)+'-'+(++serial);
 function defaults(){return{events:[],undo:null};}
-let state;try{state=JSON.parse(localStorage.getItem(KEY));if(!state||!Array.isArray(state.events))state=defaults()}catch{state=defaults()}
-let active='inicio',day=today(),weekStart=monday(day),agendaMode='semana',pauseMinutes=5,lastFocus=null,proposal=null;
+const firstDay = '2026-11-23';
+const manualMode = new URLSearchParams(location.search).get('agenda') === 'pessoal';
+const KEY = manualMode ? 'meutempo-manual-v1' : 'meutempo-etapa3-v1';
+const guidedTour = new URLSearchParams(location.search).get('tour') === '1';
+
+function demoAgenda() {
+  const subjects = [
+    'Empreendedorismo I', 'Administração Pública, Estado e Sociedade',
+    'Gestão de Pessoas I', 'Responsabilidade Socioambiental Corporativa', 'Marketing I'
+  ];
+  const events = [];
+  function add(title, date, time, end, type, course = '') {
+    events.push({id:uid(), title, date, time, end, type, course, done:false, notes:''});
+  }
+  for (let week = 0; week < 2; week++) {
+    subjects.forEach((course, index) => {
+      const date = addDays(firstDay, week * 7 + index);
+      add('Expediente', date, '08:00', '16:30', 'work');
+      add('Pausa depois do trabalho', date, '16:30', '16:50', 'rest');
+      add(course, date, '19:00', '22:00', 'lesson', course);
+    });
+  }
+  add('Revisar o ciclo de políticas públicas', firstDay, '07:15', '07:45', 'study', subjects[1]);
+  const deadlines = [
+    ['23','12:00',0,'Slides do Milestone 3'],
+    ['24','18:00',1,'Questionário sobre o ciclo de políticas públicas'],
+    ['25','',2,'Apresentação de seminários · grupo 3'],
+    ['27','',4,'Projeto de Marketing Integrador · grupos 4 a 6'],
+    ['30','12:00',0,'Relatórios do projeto final'],
+    ['30','12:00',0,'Slides da apresentação final (pitch)'],
+    ['02','12:00',2,'Envio dos seminários finais'],
+    ['02','',2,'Apresentação de seminários · grupos 4 a 6'],
+    ['03','19:00',3,'Tarefa N2']
+  ];
+  for (const [d, time, subject, title] of deadlines) {
+    add(title, '2026-' + (Number(d) < 10 ? '12-' : '11-') + d, time, '', 'deadline', subjects[subject]);
+  }
+  return events;
+}
+function readAgenda() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    if (saved && Array.isArray(saved.events)) return saved;
+  } catch {}
+  return {events:manualMode ? [] : demoAgenda(), undo:null};
+}
+function renderHome() {
+  $('homeDate').value = day;
+  const entries = ordered(state.events.filter(e => e.date === day && !e.done));
+  $('upcoming').innerHTML = entries.map(taskHTML).join('') || '<p>Dia livre. Você pode adicionar uma atividade.</p>';
+  $('homeStatus').textContent = weekday(day) + ' · ' + fullDate(day);
+  $('modeNote').textContent = manualMode ? 'Agenda pessoal neste navegador' : 'Semana simulada · aulas e rotina com horários ilustrativos';
+}
+function chooseHomeDate(value) {
+  if (!validDate(value)) return;
+  jumpDate(value);
+  renderHome();
+}
+function notifySchedule() {
+  const entries = ordered(state.events.filter(e => e.date === day && !e.done && e.time));
+  const items = entries.map(e => '<li><strong>' + e.time + '</strong> · ' + esc(e.title) + '</li>').join('');
+  openModal('Notificação simulada', '<p>' + fullDate(day) + '</p>' +
+    (items ? '<ul class="schedule-list">' + items + '</ul>' : '<p>Nenhum horário pendente para este dia.</p>') +
+    '<button class="btn" onclick="closeModal()">Entendido</button>');
+}
+
+const busStops = [
+  ['263','Setor Central','Praça Cívica',0,12],
+  ['268','Praça Cívica','Setor Universitário',18,32],
+  ['004','Setor Universitário','Campus Samambaia',40,70]
+];
+let tripStep = -1;
+function renderTrip() {
+  const departure = Number($('tripHour').value || 1030);
+  $('tripList').innerHTML = busStops.map(([line, from, to, start, end], i) =>
+    '<li' + (i === tripStep ? ' aria-current="step"' : '') + '><strong class="line-number">' + line +
+    '</strong><div><b>' + from + ' → ' + to + '</b><br>Embarque ' + clock(departure + start) +
+    ' · Desembarque ' + clock(departure + end) + '</div></li>').join('');
+  const finished = tripStep === busStops.length;
+  $('tripStatus').textContent = finished ? 'Chegada ao Campus Samambaia às ' + clock(departure + 70) :
+    tripStep < 0 ? 'Pronto para iniciar em Goiânia.' : 'Embarque na linha ' + busStops[tripStep][0] + ' às ' + clock(departure + busStops[tripStep][3]) + '.';
+  $('tripNext').textContent = finished ? 'Reiniciar trajeto' : ['Iniciar trajeto','Avançar para a linha 268','Avançar para a linha 004','Simular chegada'][tripStep + 1];
+}
+function advanceTrip() {
+  tripStep = tripStep >= busStops.length ? -1 : tripStep + 1;
+  renderTrip();
+}
+
+const boardKey = 'meutempo-mural-demo-v1';
+let posts = [
+  {kind:'Carona', text:'Saída às 17h30 da Praça Universitária para o Campus Samambaia. Tenho duas vagas.', area:'Setor Universitário', joined:false},
+  {kind:'Aviso', text:'O grupo de estudo se encontra na biblioteca do campus às 18h. Quem tiver intervalo pode participar.', area:'Campus Samambaia', joined:false}
+];
+try {
+  const saved = JSON.parse(localStorage.getItem(boardKey));
+  if (Array.isArray(saved)) posts = saved;
+} catch {}
+function updateBoard() {
+  try { localStorage.setItem(boardKey, JSON.stringify(posts)); } catch { toast('O mural está disponível apenas nesta sessão.'); }
+  renderBoard();
+}
+function renderBoard() {
+  $('posts').innerHTML = posts.map((p,i) => '<article class="post"><h3>' + esc(p.kind) + ' · ' + esc(p.area) +
+    '</h3><p>' + esc(p.text) + '</p>' + (p.kind === 'Carona' ? '<button class="btn secondary" aria-pressed="' +
+    !!p.joined + '" onclick="toggleInterest(' + i + ')">' + (p.joined ? 'Retirar interesse' : 'Tenho interesse') +
+    '</button>' : '') + '</article>').join('');
+}
+function toggleInterest(i) {
+  posts[i].joined = !posts[i].joined;
+  updateBoard();
+  $('posts').querySelectorAll('article')[i].querySelector('button').focus();
+  toast(posts[i].joined ? 'Interesse registrado na simulação.' : 'Interesse retirado.');
+}
+function publishPost(event) {
+  event.preventDefault();
+  const text = $('postText').value.trim();
+  if (!text) return $('postText').focus();
+  posts.unshift({kind:$('postKind').value, area:$('postArea').value, text, joined:false});
+  $('postText').value = '';
+  $('compose').open = false;
+  updateBoard();
+  $('compose').querySelector('summary').focus();
+  toast('Mensagem adicionada ao mural de demonstração.');
+}
+
+
+let state = readAgenda();
+let active='inicio',day=manualMode ? today() : firstDay,weekStart=monday(day),agendaMode='semana',pauseMinutes=5,lastFocus=null,proposal=null;
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{toast('Não foi possível salvar neste navegador. Mantenha esta página aberta.')}}
 function toast(s){$('toast').textContent=s;$('toast').hidden=false;clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').hidden=true,4500)}
 function mountIcons(root=document){root.querySelectorAll('[data-icon]').forEach(x=>{x.innerHTML=ico(x.dataset.icon);x.removeAttribute('data-icon')})}
 function renderNav(){$('desktopNav').innerHTML=navs.map(([id,icon,name])=>`<button data-nav="${id}" onclick="go('${id}')">${ico(icon)}${name}</button>`).join('');$('mobileNav').innerHTML=navs.filter(x=>x[0]!=='ajustar').map(([id,icon,name])=>`<button data-nav="${id}" onclick="go('${id}')">${ico(icon)}${id==='fontes'?'Prazos':name}</button>`).join('')}
-function go(id){active=id;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('active',x.dataset.nav===id));if(id==='agenda')renderAgenda();if(id==='fontes')renderImports();if(id==='inicio')renderHome();if(id==='ajustar')renderReplan();window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){active=id;if(id==='onibus')renderTrip();if(id==='mural')renderBoard();document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('active',x.dataset.nav===id));if(id==='agenda')renderAgenda();if(id==='fontes')renderImports();if(id==='inicio')renderHome();if(id==='ajustar')renderReplan();document.querySelectorAll('[data-nav]').forEach(b=>{if(b.dataset.nav===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const heading=$(id).querySelector('h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}window.scrollTo({top:0})}
 function togglePhone(){$('app').classList.toggle('compact');$('phoneBtn').textContent=$('app').classList.contains('compact')?'Modo amplo':'Modo celular'}
 function openModal(title,body){lastFocus=document.activeElement;$('modal').innerHTML=`<button class="iconbtn close" onclick="closeModal()" aria-label="Fechar">${ico('close')}</button><h2 id="modalTitle">${esc(title)}</h2>${body}`;$('modalBackdrop').hidden=false;document.body.style.overflow='hidden';$('modal').querySelector('button,input,select')?.focus()}
 function closeModal(){$('modalBackdrop').hidden=true;document.body.style.overflow='';lastFocus?.focus()}
 const ordered=items=>[...items].sort((a,b)=>(a.date+(a.time||'00:00')).localeCompare(b.date+(b.time||'00:00')));
 function taskHTML(e){const month=parseDate(e.date).toLocaleDateString('pt-BR',{month:'short'});return `<div class="task"><div class="datebox"><b>${e.date.slice(8)}</b><span>${month}</span></div><div class="task-body"><button class="textbtn ${e.done?'completed':''}" onclick="eventForm('${e.id}')">${esc(e.title)}</button><div class="task-meta">${esc(e.course||categories[e.type])} · ${shortDate(e.date)}/${e.date.slice(0,4)}<br>${e.time||'Sem horário'}${e.end?'–'+e.end:''}</div></div><button class="check ${e.done?'done':''}" onclick="toggleDone('${e.id}')" aria-label="${e.done?'Reabrir':'Concluir'} ${esc(e.title)}">${e.done?'✓':''}</button></div>`}
-function renderHome(){const start=monday(today()),end=addDays(start,6),week=state.events.filter(e=>e.date>=start&&e.date<=end&&!e.done);$('stats').innerHTML=`<div class="stat"><strong>${week.length}</strong><span>Atividades nesta semana</span></div><div class="stat green"><strong>${week.filter(e=>e.type==='rest').length}</strong><span>Blocos de descanso na semana</span></div><div class="stat amber"><strong>${state.events.filter(e=>e.type==='deadline'&&!e.done).length}</strong><span>Prazos pendentes</span></div>`;const next=ordered(state.events.filter(e=>!e.done&&e.date>=today())).slice(0,4);$('upcoming').innerHTML=next.map(taskHTML).join('')||'<div class="empty">Nenhuma atividade futura cadastrada. Use “Adicionar” para começar.</div>';$('homeStatus').textContent=state.events.length?`${state.events.length} atividades salvas neste navegador.`:'Sua agenda está vazia. Comece com um compromisso ou um prazo.'}
+
 function toggleDone(id){const e=state.events.find(e=>e.id===id);if(!e)return;e.done=!e.done;persist();renderHome();renderAgenda();renderImports()}
 function setAgendaMode(mode){agendaMode=mode;renderAgenda()}
 function changeWeek(n){weekStart=addDays(weekStart,n);day=weekStart;renderAgenda()}
@@ -84,11 +268,11 @@ const pauses=[{title:'Descansar sem preencher o tempo',icon:'moon',type:'rest',d
 function setPause(n,b){pauseMinutes=n;document.querySelectorAll('#durationChips button').forEach(x=>x.classList.toggle('active',x===b));renderPauses()}
 function renderPauses(){$('recommendations').innerHTML=pauses.map((r,i)=>`<article class="rec"><div class="recicon">${ico(r.icon)}</div><span class="badge green">${pauseMinutes} minutos · opcional</span><h3 style="margin-top:14px">${r.title}</h3><p>${r.desc}</p><button class="btn secondary" onclick="reservePause(${i})">Escolher um horário</button></article>`).join('')}
 function reservePause(i){const r=pauses[i];eventForm(null,{title:r.title,date:day,time:'18:30',end:clock(18*60+30+pauseMinutes),type:r.type})}
-function about(){openModal('Sobre este protótipo',`<p>O Meu Tempo começa com a agenda vazia. Cadastre suas atividades, trabalhos acadêmicos, horários de estudo, descanso e lazer.</p><div class="notice">Os dados ficam somente neste navegador. Outras pessoas que abrem o link têm sua própria agenda. Não há conexão ativa ao SIGAA nem autenticação real.</div><p>Você pode escolher qualquer data, repetir atividades e copiar uma semana. A reorganização usa os compromissos que você cadastrou.</p><div class="actions"><button class="btn danger" onclick="confirmReset()">Limpar agenda para novo teste</button></div>`)}
+function about(){openModal('Sobre este protótipo',`<p>A demonstração combina disciplinas e prazos acadêmicos com horários ilustrativos de aula, trabalho e descanso. Em Meu dia, escolha Mais ferramentas para alternar entre a demonstração e a agenda manual.</p><div class="notice">Os dados ficam somente neste navegador. Outras pessoas que abrem o link têm sua própria agenda. Não há conexão ativa ao SIGAA nem autenticação real.</div><p>Você pode escolher qualquer data, repetir atividades e copiar uma semana. A reorganização usa os compromissos que você cadastrou.</p><div class="actions"><button class="btn danger" onclick="confirmReset()">Limpar agenda para novo teste</button></div>`)}
 function confirmReset(){openModal('Limpar a agenda?',`<p>Todas as atividades deste teste serão removidas. A agenda voltará a ficar vazia.</p><div class="actions"><button class="btn danger" onclick="resetAll()">Sim, limpar agenda</button><button class="btn secondary" onclick="closeModal()">Manter atividades</button></div>`)}
 function resetAll(){state=defaults();persist();proposal=null;day=today();weekStart=monday(day);closeModal();renderHome();renderAgenda();renderImports();go('inicio');toast('Agenda vazia, pronta para um novo teste.')}
 document.addEventListener('keydown',e=>{if($('modalBackdrop').hidden)return;if(e.key==='Escape')closeModal();if(e.key==='Tab'){const items=[...$('modal').querySelectorAll('button,input,select,textarea,a')].filter(x=>!x.disabled);if(e.shiftKey&&document.activeElement===items[0]){items.at(-1).focus();e.preventDefault()}else if(!e.shiftKey&&document.activeElement===items.at(-1)){items[0].focus();e.preventDefault()}}});
-renderNav();mountIcons();renderHome();renderAgenda();renderImports();renderPauses();go('inicio');
+if(manualMode){$('switchAgenda').href='?';$('switchAgenda').textContent='Abrir semana de demonstração'} renderNav();mountIcons();renderHome();renderAgenda();renderImports();renderPauses();go('inicio');
 
 </script>
 <script>
